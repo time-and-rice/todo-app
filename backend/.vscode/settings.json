@@ -1,0 +1,10 @@
+{
+  "[go]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": false
+    }
+  },
+  "[makefile]": {
+    "editor.insertSpaces": false
+  }
+}
