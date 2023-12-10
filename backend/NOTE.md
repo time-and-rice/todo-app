@@ -1,0 +1,7 @@
+- gcp へ deploy
+  - (gcloud artifacts repositories create repo-0 --repository-format=docker --location=asia-northeast1)
+  - (gcloud auth configure-docker asia-northeast1-docker.pkg.dev)
+  - docker build . --tag asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0:latest --platform linux/amd64
+  - docker push asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0:latest
+  - gcloud run deploy server --image asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0:latest --region asia-northeast1 --allow-unauthenticated
+  - gcloud artifacts docker images delete asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0 --quiet
