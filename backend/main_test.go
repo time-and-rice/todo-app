@@ -26,7 +26,7 @@ func TestHandler(t *testing.T) {
 		t.Errorf("got %v want %v", status, http.StatusOK)
 	}
 
-	expected := "Hello Taro!\n"
+	expected := "Hello, Taro!\n"
 	if rr.Body.String() != expected {
 		t.Errorf("got %v want %v", rr.Body.String(), expected)
 	}
