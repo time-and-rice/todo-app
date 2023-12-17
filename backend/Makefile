@@ -2,7 +2,9 @@
 		docker-push \
 		run-deploy \
 		artifacts-clean \
-		test
+		test \
+		dc-up \
+		dc-down
 docker-build:
 	docker build . --tag asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0:latest --platform linux/amd64
 docker-push:
@@ -13,3 +15,7 @@ artifacts-clean:
 	gcloud artifacts docker images delete asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0 --quiet
 test:
 	go test
+dc-up:
+	docker compose -p todo-app up
+dc-down:
+	docker compose -p todo-app down
