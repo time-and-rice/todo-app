@@ -5,3 +5,10 @@
   - docker push asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0:latest
   - gcloud run deploy server --image asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0:latest --region asia-northeast1 --allow-unauthenticated
   - gcloud artifacts docker images delete asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0 --quiet
+- golang-migrate で migrate
+  - go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+  - migrate create -ext sql -dir migrations -seq create_tasks
+  - migrate -database "postgresql://postgres:password@localhost:5432/todo-app?sslmode=disable" -path ./migrations up
+  - psql -U postgres -d todo-app
+    - \dt
+    - \d tasks
