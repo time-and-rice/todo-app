@@ -16,6 +16,6 @@ artifacts-clean:
 test:
 	go test
 dc-up:
-	docker compose -p todo-app up
+	docker compose -p todo-app up -d
 dc-down:
 	docker compose -p todo-app down
