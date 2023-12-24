@@ -23,13 +23,13 @@ tasks:
 
   dc-up:
     cmds:
-      - docker compose -p todo-app up
+      - docker compose -p todo-app up -d
 
   dc-down:
     cmds:
       - docker compose -p todo-app down
 
-  dburl:
+  migrate-development:
     dotenv: [".env.development"]
     cmds:
-      - echo "$DATABASE_URL"
+      - migrate -database "$DATABASE_URL" -path ./migrations up
