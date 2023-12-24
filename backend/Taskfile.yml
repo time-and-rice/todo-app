@@ -1,0 +1,35 @@
+version: "3"
+
+tasks:
+  docker-build:
+    cmds:
+      - docker build . --tag asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0:latest --platform linux/amd64
+
+  docker-push:
+    cmds:
+      - docker push asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0:latest
+
+  run-deploy:
+    cmds:
+      - gcloud run deploy server --image asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0:latest --region asia-northeast1 --allow-unauthenticated
+
+  artifacts-clean:
+    cmds:
+      - gcloud artifacts docker images delete asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0 --quiet
+
+  test:
+    cmds:
+      - go test
+
+  dc-up:
+    cmds:
+      - docker compose -p todo-app up
+
+  dc-down:
+    cmds:
+      - docker compose -p todo-app down
+
+  dburl:
+    dotenv: [".env.development"]
+    cmds:
+      - echo "$DATABASE_URL"
