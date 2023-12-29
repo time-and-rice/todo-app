@@ -24,7 +24,7 @@ func main() {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	name := os.Getenv("NAME")
+	name := os.Getenv("RELEASE_STAGE")
 	if name == "" {
 		name = "World"
 	}
