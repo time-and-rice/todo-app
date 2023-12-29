@@ -23,7 +23,7 @@ tasks:
 
   test:
     cmds:
-      - go test
+      - RELEASE_STAGE=test go test
 
   dc-up:
     cmds:
