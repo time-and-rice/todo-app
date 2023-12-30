@@ -21,4 +21,5 @@
 go.work
 
 # Custom
+.env.production
 tmp

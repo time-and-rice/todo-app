@@ -4,16 +4,15 @@ tmp_dir = "tmp"
 
 [build]
 args_bin = []
-bin = "./tmp/main"
-cmd = "go build -o ./tmp/main ."
+bin = "./tmp/api"
+cmd = "go build -o ./tmp/api ./api"
 delay = 1000
 exclude_dir = ["assets", "tmp", "vendor", "testdata"]
 exclude_file = []
 exclude_regex = ["_test.go"]
 exclude_unchanged = false
 follow_symlink = false
-# With env
-full_bin = "RELEASE_STAGE=development ./tmp/main"
+full_bin = "RELEASE_STAGE=development ./tmp/api"
 include_dir = []
 include_ext = ["go", "tpl", "tmpl", "html"]
 include_file = []
