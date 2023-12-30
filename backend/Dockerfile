@@ -13,4 +13,5 @@ ARG RELEASE_STAGE
 ENV RELEASE_STAGE=${RELEASE_STAGE}
 COPY --from=builder /app/server /app/server
 COPY --from=builder /app/.env.${RELEASE_STAGE} /app/.env.${RELEASE_STAGE}
-CMD ["/app/server"]
+WORKDIR /app
+CMD ["./server"]
