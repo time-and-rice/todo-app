@@ -1,9 +1,35 @@
 version: "3"
 
 tasks:
+  # Develop
+  run:
+    cmds:
+      - air
+
+  dc-up:
+    cmds:
+      - docker compose -p todo-app up
+
+  migrate-development:
+    dotenv: [".env.development"]
+    cmds:
+      - migrate -database "$DATABASE_URL" -path ./migrations up
+
+  # Test
+  test:
+    cmds:
+      - RELEASE_STAGE=test go test
+
+  # Deploy
+  deploy:
+    cmds:
+      - task: docker-build
+      - task: docker-push
+      - task: run-deploy
+
   docker-build:
     cmds:
-      - docker build . --tag asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0:latest --platform linux/amd64
+      - docker build . --tag asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0:latest --platform linux/amd64 --build-arg RELEASE_STAGE=production
 
   docker-push:
     cmds:
@@ -16,20 +42,3 @@ tasks:
   artifacts-clean:
     cmds:
       - gcloud artifacts docker images delete asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0 --quiet
-
-  run:
-    cmds:
-      - RELEASE_STAGE=development go run ./main.go
-
-  test:
-    cmds:
-      - RELEASE_STAGE=test go test
-
-  dc-up:
-    cmds:
-      - docker compose -p todo-app up
-
-  migrate-development:
-    dotenv: [".env.development"]
-    cmds:
-      - migrate -database "$DATABASE_URL" -path ./migrations up

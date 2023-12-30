@@ -10,5 +10,6 @@ RUN set -x && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -
     ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 COPY --from=builder /app/server /app/server
-ENV RELEASE_STAGE=production
+ARG RELEASE_STAGE
+ENV RELEASE_STAGE=${RELEASE_STAGE}
 CMD ["/app/server"]
