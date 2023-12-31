@@ -1,26 +1,20 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/time-and-rice/todo-app/backend/controller"
 )
 
 func main() {
-	dbHost := cfg.DatabaseUrl
-	port := cfg.Port
+	tc := controller.NewTasksController()
+	ro := controller.NewRouter(tc)
 
-	log.Printf("dbHost: %s", dbHost)
-	log.Printf("port: %s", port)
-
-	http.HandleFunc("/", home)
-
-	err := http.ListenAndServe(":"+port, nil)
-	if err != nil {
-		panic(err)
+	server := http.Server{
+		Addr: ":" + cfg.Port,
 	}
-}
-
-func home(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Hi!")
+	http.HandleFunc("/tasks/", ro.HandleTasksRequest)
+	log.Printf("serve on %s", cfg.Port)
+	server.ListenAndServe()
 }
