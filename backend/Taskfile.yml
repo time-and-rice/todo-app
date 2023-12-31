@@ -1,14 +1,20 @@
 version: "3"
 
 tasks:
-  # Develop
+  # Development
   run:
+    deps: [dc-up]
     cmds:
       - air
+      - task: dc-stop
 
   dc-up:
     cmds:
-      - docker compose -p todo-app up
+      - docker compose -p todo-app up -d
+
+  dc-stop:
+    cmds:
+      - docker compose -p todo-app stop
 
   migrate-development:
     dotenv: [".env.development"]
@@ -20,7 +26,7 @@ tasks:
     cmds:
       - RELEASE_STAGE=test go test
 
-  # Deploy
+  # Production
   deploy:
     cmds:
       - task: docker-build
