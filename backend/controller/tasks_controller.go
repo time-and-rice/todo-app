@@ -5,14 +5,6 @@ import (
 	"net/http"
 )
 
-type TaskResponse struct {
-	Id int `json:"id"`
-}
-
-type TasksResponse struct {
-	Tasks []TaskResponse `json:"tasks"`
-}
-
 type TasksController interface {
 	GetTasks(w http.ResponseWriter, r *http.Request)
 }
