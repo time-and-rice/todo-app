@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/caarlos0/env/v10"
@@ -22,8 +21,7 @@ func init() {
 	envPath := fmt.Sprintf(".env.%s", releaseStage)
 	err := godotenv.Load(envPath)
 	if err != nil {
-		log.Fatal(err)
-		return
+		panic(err)
 	}
 	env.Parse(&cfg)
 }
