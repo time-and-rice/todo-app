@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/caarlos0/env/v10"
@@ -17,9 +16,8 @@ type Config struct {
 var cfg Config
 
 func init() {
-	releaseStage := os.Getenv("RELEASE_STAGE")
-	envPath := fmt.Sprintf(".env.%s", releaseStage)
-	err := godotenv.Load(envPath)
+	config := os.Getenv("CONFIG")
+	err := godotenv.Load(config)
 	if err != nil {
 		panic(err)
 	}

@@ -12,7 +12,7 @@ exclude_file = []
 exclude_regex = ["_test.go"]
 exclude_unchanged = false
 follow_symlink = false
-full_bin = "RELEASE_STAGE=development ./tmp/server"
+full_bin = "CONFIG=.env.development ./tmp/server"
 include_dir = []
 include_ext = ["go", "tpl", "tmpl", "html"]
 include_file = []
