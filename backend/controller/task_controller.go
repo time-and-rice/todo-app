@@ -4,19 +4,19 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/samber/lo"
+	"github.com/time-and-rice/todo-app/backend/model"
 )
 
-type TaskController struct{}
+type TaskController struct {
+	tr model.TaskRepository
+}
 
-func NewTaskController(e *echo.Echo) {
-	tc := TaskController{}
+func NewTaskController(e *echo.Echo, tr model.TaskRepository) {
+	tc := TaskController{tr}
 	e.GET("/tasks", tc.GetTasks)
 }
 
 func (tc *TaskController) GetTasks(c echo.Context) error {
-	tasksResponse := lo.Times(5, func(i int) TaskResponse {
-		return TaskResponse{Id: i}
-	})
-	return c.JSON(http.StatusOK, tasksResponse)
+	tasks := tc.tr.GetTasks()
+	return c.JSON(http.StatusOK, tasks)
 }
