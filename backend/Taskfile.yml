@@ -3,14 +3,12 @@ version: "3"
 tasks:
   # Development
   run:
-    deps: [dc-up]
     cmds:
       - air
-      - task: dc-stop
 
   dc-up:
     cmds:
-      - docker compose -p todo-app up -d
+      - docker compose -p todo-app up
 
   dc-stop:
     cmds:
