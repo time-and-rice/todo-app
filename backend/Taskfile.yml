@@ -46,3 +46,8 @@ tasks:
   artifacts-clean:
     cmds:
       - gcloud artifacts docker images delete asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0 --quiet
+
+  migrate-production:
+    dotenv: [".env.production"]
+    cmds:
+      - migrate -database "$DATABASE_URL" -path ./migrations up

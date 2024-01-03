@@ -18,5 +18,5 @@ func NewTaskController(e *echo.Echo, tr model.TaskRepository) {
 
 func (tc *TaskController) GetTasks(c echo.Context) error {
 	tasks := tc.tr.GetTasks()
-	return c.JSON(http.StatusOK, tasks)
+	return c.JSONPretty(http.StatusOK, tasks, "  ")
 }
