@@ -10,8 +10,11 @@ type Task struct {
 	UpdatedAt time.Time `db:"updated_at" json:"updatedAt"`
 }
 
-func GetTasks() []Task {
+func GetTasks() ([]Task, error) {
 	tasks := []Task{}
-	_ = db.Select(&tasks, `SELECT * FROM tasks;`)
-	return tasks
+	err := db.Select(&tasks, `SELECT * FROM tasks;`)
+	if err != nil {
+		return nil, err
+	}
+	return tasks, nil
 }
