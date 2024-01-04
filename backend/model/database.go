@@ -6,11 +6,11 @@ import (
 	"github.com/time-and-rice/todo-app/backend/config"
 )
 
-var DB *sqlx.DB
+var db *sqlx.DB
 
 func init() {
 	var err error
-	DB, err = sqlx.Connect("postgres", config.Cfg.DatabaseUrl)
+	db, err = sqlx.Connect("postgres", config.Cfg.DatabaseUrl)
 	if err != nil {
 		panic(err)
 	}

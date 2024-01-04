@@ -12,6 +12,6 @@ type Task struct {
 
 func GetTasks() []Task {
 	tasks := []Task{}
-	_ = DB.Select(&tasks, `SELECT * FROM tasks;`)
+	_ = db.Select(&tasks, `SELECT * FROM tasks;`)
 	return tasks
 }
