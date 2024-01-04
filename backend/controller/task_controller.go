@@ -12,11 +12,6 @@ func SetupTaskRoutes(e *echo.Echo) {
 }
 
 func GetTasks(c echo.Context) error {
-	_, err := decodeIdToken(c)
-	if err != nil {
-		return c.JSON(http.StatusUnauthorized, err.Error())
-	}
-
 	tasks, err := model.GetTasks()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())

@@ -16,7 +16,7 @@ tasks:
 
   emu:
     cmds:
-      - firebase emulators:start --only auth --import=./fire-emu-data --export-on-exit
+      - firebase emulators:start --only auth --import=./fire-emu-data --export-on-exit --project p-emu
 
   emu-kill:
     cmds:
