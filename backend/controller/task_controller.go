@@ -7,16 +7,11 @@ import (
 	"github.com/time-and-rice/todo-app/backend/model"
 )
 
-type TaskController struct {
-	tr model.TaskRepository
+func SetupTaskRoutes(e *echo.Echo) {
+	e.GET("/tasks", GetTasks)
 }
 
-func NewTaskController(e *echo.Echo, tr model.TaskRepository) {
-	tc := TaskController{tr}
-	e.GET("/tasks", tc.GetTasks)
-}
-
-func (tc *TaskController) GetTasks(c echo.Context) error {
-	tasks := tc.tr.GetTasks()
+func GetTasks(c echo.Context) error {
+	tasks := model.GetTasks()
 	return c.JSONPretty(http.StatusOK, tasks, "  ")
 }

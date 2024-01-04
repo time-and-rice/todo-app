@@ -1,4 +1,4 @@
-package main
+package config
 
 import (
 	"os"
@@ -13,7 +13,7 @@ type Config struct {
 	DatabaseUrl  string `env:"DATABASE_URL,notEmpty"`
 }
 
-var cfg Config
+var Cfg Config
 
 func init() {
 	config := os.Getenv("CONFIG")
@@ -21,5 +21,5 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	env.Parse(&cfg)
+	env.Parse(&Cfg)
 }
