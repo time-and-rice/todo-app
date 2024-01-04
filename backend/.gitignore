@@ -22,4 +22,10 @@ go.work
 
 # Custom
 .env.production
+
 tmp
+
+.firebase
+fire-emu-data
+
+*.log

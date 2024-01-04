@@ -14,6 +14,14 @@ tasks:
     cmds:
       - docker compose -p todo-app stop
 
+  emu:
+    cmds:
+      - firebase emulators:start --only auth --import=./fire-emu-data --export-on-exit
+
+  emu-kill:
+    cmds:
+      - lsof -t -i:9099 | xargs kill -9
+
   migrate-development:
     dotenv: [".env.development"]
     cmds:

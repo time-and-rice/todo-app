@@ -1,3 +1,11 @@
+# TODO
+
+- [] firebase
+  - [] auth
+  - [] emu
+
+# NOTE
+
 - gcp へ deploy
   - (gcloud artifacts repositories create repo-0 --repository-format=docker --location=asia-northeast1)
   - (gcloud auth configure-docker asia-northeast1-docker.pkg.dev)
