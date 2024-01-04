@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -13,7 +12,7 @@ func SetupTaskRoutes(e *echo.Echo) {
 }
 
 func GetTasks(c echo.Context) error {
-	token, err := decodeIdToken(c)
+	_, err := decodeIdToken(c)
 	if err != nil {
 		return c.JSON(http.StatusUnauthorized, err.Error())
 	}
@@ -23,6 +22,5 @@ func GetTasks(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	log.Println(token)
 	return c.JSONPretty(http.StatusOK, tasks, "  ")
 }
