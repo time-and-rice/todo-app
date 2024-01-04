@@ -7,11 +7,11 @@ import (
 	"github.com/time-and-rice/todo-app/backend/model"
 )
 
-func SetupTaskRoutes(e *echo.Echo) {
-	e.GET("/tasks", GetTasks)
+func setupTaskRoutes(e *echo.Echo) {
+	e.GET("/tasks", getTasks)
 }
 
-func GetTasks(c echo.Context) error {
+func getTasks(c echo.Context) error {
 	tasks, err := model.GetTasks()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
