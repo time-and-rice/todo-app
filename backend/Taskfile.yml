@@ -41,7 +41,7 @@ tasks:
 
   docker-build:
     cmds:
-      - docker build . --tag asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0:latest --platform linux/amd64 --build-arg CONFIG=.env.production
+      - docker build . --tag asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0:latest --file Dockerfile.production --build-arg CONFIG=.env.production --platform linux/amd64
 
   docker-push:
     cmds:
