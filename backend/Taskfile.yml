@@ -8,7 +8,7 @@ tasks:
 
   dc-up:
     cmds:
-      - docker compose -p todo-app up
+      - docker compose -f docker-compose.development.yaml -p todo-app up
 
   dc-stop:
     cmds:
@@ -51,7 +51,11 @@ tasks:
     cmds:
       - gcloud run deploy server --image asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0:latest --region asia-northeast1 --allow-unauthenticated
 
-  artifacts-clean:
+  docker-rmi:
+    cmds:
+      - docker rmi asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0
+
+  artifacts-delete:
     cmds:
       - gcloud artifacts docker images delete asia-northeast1-docker.pkg.dev/todo-app-407716/repo-0/img-0 --quiet
 
