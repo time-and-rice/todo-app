@@ -6,6 +6,10 @@ tasks:
     cmds:
       - air
 
+  pre-run:
+    cmds:
+      - task dc-up emu -p
+
   dc-up:
     cmds:
       - docker compose -f docker-compose.development.yaml -p todo-app up
