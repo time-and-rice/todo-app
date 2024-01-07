@@ -5,6 +5,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	_ "github.com/lib/pq"
 	"github.com/time-and-rice/todo-app/backend/infra"
+	"github.com/time-and-rice/todo-app/backend/presen"
 )
 
 func main() {
@@ -16,7 +17,14 @@ func main() {
 	_ = infra.NewDb(cfg.DatabaseUrl)
 
 	fir := infra.NewFir()
-	_ = infra.NewFirAuthenticator(fir)
+	fa := infra.NewFirAuthenticator(fir)
+
+	am := presen.NewAuthMiddleware(fa)
+	_ = presen.NewMustAuthMiddleware(fa)
+
+	root := e.Group("/")
+	root.Use(am)
+	root.GET("", presen.HealthCheckHandler)
 
 	e.Start(":" + cfg.Port)
 }

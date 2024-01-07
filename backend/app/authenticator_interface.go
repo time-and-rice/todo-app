@@ -1,9 +1,9 @@
 package app
 
 type AuthUser struct {
-	Id string
+	Id string `json:"id"`
 }
 
 type Authenticator interface {
-	VerifyIDToken(token string) (*AuthUser, error)
+	VerifyIdToken(token string) (*AuthUser, error)
 }

@@ -11,11 +11,11 @@ type FirAuthenticator struct {
 	client *auth.Client
 }
 
-func NewFirAuthenticator(fir *Fir) *FirAuthenticator {
+func NewFirAuthenticator(fir *Fir) app.Authenticator {
 	return &FirAuthenticator{client: fir.AuthClient}
 }
 
-func VerifyIdToken(fa *FirAuthenticator, token string) (*app.AuthUser, error) {
+func (fa *FirAuthenticator) VerifyIdToken(token string) (*app.AuthUser, error) {
 	decoded, err := fa.client.VerifyIDToken(context.Background(), token)
 	if err != nil {
 		return nil, err

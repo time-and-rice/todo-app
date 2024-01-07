@@ -12,11 +12,9 @@ import (
 func NewAuthMiddleware(a app.Authenticator) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			au, err := decodeJwt(a, c)
-			if err != nil {
-				return nil
-			}
+			au, _ := decodeJwt(a, c)
 			c.Set("authUser", au)
+			next(c)
 			return nil
 		}
 	}
@@ -30,6 +28,7 @@ func NewMustAuthMiddleware(a app.Authenticator) echo.MiddlewareFunc {
 				return c.JSON(http.StatusUnauthorized, err)
 			}
 			c.Set("authUser", au)
+			next(c)
 			return nil
 		}
 	}
@@ -46,7 +45,7 @@ func decodeJwt(a app.Authenticator, c echo.Context) (*app.AuthUser, error) {
 
 	token = strings.TrimPrefix(token, "Bearer ")
 
-	au, err := a.VerifyIDToken(token)
+	au, err := a.VerifyIdToken(token)
 	if err != nil {
 		return nil, err
 	}
