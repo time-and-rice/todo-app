@@ -1,4 +1,4 @@
-package model
+package domain
 
 import "time"
 
@@ -8,13 +8,4 @@ type Task struct {
 	Status    string    `db:"status" json:"status"`
 	CreatedAt time.Time `db:"created_at" json:"createdAt"`
 	UpdatedAt time.Time `db:"updated_at" json:"updatedAt"`
-}
-
-func GetTasks() ([]Task, error) {
-	tasks := []Task{}
-	err := db.Select(&tasks, `SELECT * FROM tasks;`)
-	if err != nil {
-		return nil, err
-	}
-	return tasks, nil
 }

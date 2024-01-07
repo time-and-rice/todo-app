@@ -3,15 +3,20 @@ package main
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/time-and-rice/todo-app/backend/common"
-	"github.com/time-and-rice/todo-app/backend/controller"
+	_ "github.com/lib/pq"
+	"github.com/time-and-rice/todo-app/backend/infra"
 )
 
 func main() {
 	e := echo.New()
 	e.Pre(middleware.RemoveTrailingSlash())
 
-	controller.Setup(e)
+	cfg := infra.NewCfg()
 
-	e.Start(":" + common.Cfg.Port)
+	_ = infra.NewDb(cfg.DatabaseUrl)
+
+	fir := infra.NewFir()
+	_ = infra.NewFirAuthenticator(fir)
+
+	e.Start(":" + cfg.Port)
 }

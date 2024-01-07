@@ -1,4 +1,4 @@
-package common
+package infra
 
 import (
 	"os"
@@ -13,13 +13,13 @@ type Config struct {
 	DatabaseUrl  string `env:"DATABASE_URL,notEmpty"`
 }
 
-var Cfg Config
-
-func init() {
+func NewCfg() Config {
 	config := os.Getenv("CONFIG")
 	err := godotenv.Load(config)
 	if err != nil {
 		panic(err)
 	}
-	env.Parse(&Cfg)
+	var cfg Config
+	env.Parse(&cfg)
+	return cfg
 }
