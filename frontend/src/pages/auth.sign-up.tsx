@@ -1,8 +1,12 @@
 import { Button, Heading, Stack } from "@chakra-ui/react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useForm } from "react-hook-form";
 
 import { AppLink } from "~/components/app-link";
+import { ErrorOrNull } from "~/components/error-or-null";
 import { InputField } from "~/components/form/input-filed";
+import { useTryState } from "~/hooks/use-try-state";
+import { auth } from "~/infra/fir";
 
 type SignUpForm = {
   email: string;
@@ -11,15 +15,26 @@ type SignUpForm = {
 };
 
 export default function SignUp() {
+  const { loading, setLoading, error, setError } = useTryState();
+
   const { register, handleSubmit } = useForm<SignUpForm>();
 
-  function onSubmit(v: SignUpForm) {
-    console.log(v);
+  async function onSubmit(v: SignUpForm) {
+    try {
+      setLoading(true);
+      await createUserWithEmailAndPassword(auth, v.email, v.password);
+    } catch (e) {
+      setError(e);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
     <Stack spacing="4">
       <Heading alignSelf="center">Sign up</Heading>
+
+      <ErrorOrNull error={error} />
 
       <Stack as="form" spacing="4" onSubmit={handleSubmit(onSubmit)}>
         <InputField
@@ -40,7 +55,7 @@ export default function SignUp() {
           isRequired
           register={register("confirmation")}
         />
-        <Button type="submit" colorScheme="blue">
+        <Button type="submit" colorScheme="blue" disabled={loading}>
           Submit
         </Button>
       </Stack>

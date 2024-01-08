@@ -1,13 +1,45 @@
-import { Container } from "@chakra-ui/react";
+import { HamburgerIcon } from "@chakra-ui/icons";
+import {
+  Box,
+  Container,
+  Flex,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+} from "@chakra-ui/react";
+import { signOut } from "firebase/auth";
 import { Outlet } from "react-router-dom";
 
 import { Guard } from "~/hocs/guard";
+import { auth } from "~/infra/fir";
 
 const MeLayout = Guard("AfterAuth", function () {
   return (
-    <Container maxW="lg" px="4" py="8">
-      <Outlet />
-    </Container>
+    <Box>
+      <Box py="2">
+        <Container maxW="lg">
+          <Flex justifyContent="space-between" alignItems="center">
+            <Box fontWeight="bold" fontSize="xl">
+              Todo app
+            </Box>
+            <Box>
+              <Menu placement="bottom-end">
+                <MenuButton as={IconButton} icon={<HamburgerIcon />} />
+                <MenuList>
+                  <MenuItem onClick={() => signOut(auth)}>Sign out</MenuItem>
+                </MenuList>
+              </Menu>
+            </Box>
+          </Flex>
+        </Container>
+      </Box>
+
+      <Container maxW="lg">
+        <Outlet />
+      </Container>
+    </Box>
   );
 });
 
