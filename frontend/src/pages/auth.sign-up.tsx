@@ -1,6 +1,7 @@
 import { Button, Heading, Stack } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 
+import { AppLink } from "~/components/app-link";
 import { InputField } from "~/components/form/input-filed";
 
 type SignUpForm = {
@@ -18,7 +19,7 @@ export default function SignUp() {
 
   return (
     <Stack spacing="4">
-      <Heading alignSelf="center">Sign Up</Heading>
+      <Heading alignSelf="center">Sign up</Heading>
 
       <Stack as="form" spacing="4" onSubmit={handleSubmit(onSubmit)}>
         <InputField
@@ -43,6 +44,8 @@ export default function SignUp() {
           Submit
         </Button>
       </Stack>
+
+      <AppLink to="/auth/log-in">to Log in</AppLink>
     </Stack>
   );
 }

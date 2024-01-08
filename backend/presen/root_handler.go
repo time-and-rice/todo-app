@@ -6,7 +6,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func HealthCheckHandler(c echo.Context) error {
+func GetIndex(c echo.Context) error {
 	au := GetAuthUser(c)
 	return c.JSON(http.StatusOK, au)
 }

@@ -14,8 +14,7 @@ func NewAuthMiddleware(a app.Authenticator) echo.MiddlewareFunc {
 		return func(c echo.Context) error {
 			au, _ := decodeJwt(a, c)
 			c.Set("authUser", au)
-			next(c)
-			return nil
+			return next(c)
 		}
 	}
 }
@@ -28,8 +27,7 @@ func NewMustAuthMiddleware(a app.Authenticator) echo.MiddlewareFunc {
 				return c.JSON(http.StatusUnauthorized, err)
 			}
 			c.Set("authUser", au)
-			next(c)
-			return nil
+			return next(c)
 		}
 	}
 }

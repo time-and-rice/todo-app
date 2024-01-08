@@ -11,6 +11,7 @@ import (
 func main() {
 	e := echo.New()
 	e.Pre(middleware.RemoveTrailingSlash())
+	e.Use(middleware.CORS())
 
 	cfg := infra.NewCfg()
 
@@ -24,7 +25,7 @@ func main() {
 
 	root := e.Group("/")
 	root.Use(am)
-	root.GET("", presen.HealthCheckHandler)
+	root.GET("", presen.GetIndex)
 
 	e.Start(":" + cfg.Port)
 }
