@@ -1,33 +1,20 @@
 import { Button, Heading, Stack } from "@chakra-ui/react";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { useForm } from "react-hook-form";
 
-import { AppLink } from "~/components/app-link";
-import { ErrorOrNull } from "~/components/error-or-null";
+import { AppLink } from "~/components/misc/app-link";
+import { ErrorOrNull } from "~/components/misc/error-or-null";
 import { InputField } from "~/components/form/input-filed";
-import { useTryState } from "~/hooks/use-try-state";
-import { auth } from "~/infra/fir";
+import { useLogIn } from "~/hooks/auth/use-log-in";
 
-type LogInForm = {
+export type LogInForm = {
   email: string;
   password: string;
 };
 
 export default function LogIn() {
-  const { loading, setLoading, error, setError } = useTryState();
+  const { logIn, loading, error } = useLogIn();
 
   const { register, handleSubmit } = useForm<LogInForm>();
-
-  async function onSubmit(v: LogInForm) {
-    try {
-      setLoading(true);
-      await signInWithEmailAndPassword(auth, v.email, v.password);
-    } catch (e) {
-      setError(e);
-    } finally {
-      setLoading(false);
-    }
-  }
 
   return (
     <Stack spacing="4">
@@ -35,7 +22,7 @@ export default function LogIn() {
 
       <ErrorOrNull error={error} />
 
-      <Stack as="form" spacing="4" onSubmit={handleSubmit(onSubmit)}>
+      <Stack as="form" spacing="4" onSubmit={handleSubmit(logIn)}>
         <InputField
           label="Email"
           type="email"

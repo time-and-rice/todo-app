@@ -8,7 +8,7 @@ import {
 } from "react";
 import invariant from "tiny-invariant";
 
-import { Fallback } from "~/components/fallback";
+import { Fallback } from "~/components/misc/fallback";
 import { auth } from "~/infra/fir";
 
 export type AuthUser = User;
