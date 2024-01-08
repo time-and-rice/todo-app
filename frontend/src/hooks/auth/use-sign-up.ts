@@ -15,8 +15,7 @@ export function useSignUp() {
     try {
       setLoading(true);
       if (v.password != v.confirmation) {
-        toast.error("Password does not match.");
-        return;
+        throw new Error("Password does not match.");
       }
       await createUserWithEmailAndPassword(auth, v.email, v.password);
       toast.success("Signed up");
