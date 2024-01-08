@@ -10,7 +10,9 @@
     "lint": "eslint \"./src/**/*.{ts,tsx}\"",
     "lint:fix": "yarn lint --fix",
     "format": "prettier -l \"./src/**/*.{ts,tsx,json}\"",
-    "format:fix": "yarn format --write"
+    "format:fix": "yarn format --write",
+    "predeploy": "yarn build",
+    "deploy": "firebase deploy --only hosting"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",
