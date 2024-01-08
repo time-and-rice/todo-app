@@ -1,9 +1,9 @@
 import { Button, Heading, Stack } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 
+import { InputField } from "~/components/form/input-filed";
 import { AppLink } from "~/components/misc/app-link";
 import { ErrorOrNull } from "~/components/misc/error-or-null";
-import { InputField } from "~/components/form/input-filed";
 import { useLogIn } from "~/hooks/auth/use-log-in";
 
 export type LogInForm = {

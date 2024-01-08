@@ -10,5 +10,7 @@ import {
 type AppLinkProps = ChakraLinkProps & ReactRouterLinkProps;
 
 export function AppLink(props: AppLinkProps) {
-  return <ChakraLink as={ReactRouterLink} {...props} />;
+  return (
+    <ChakraLink as={ReactRouterLink} textDecoration="underline" {...props} />
+  );
 }
