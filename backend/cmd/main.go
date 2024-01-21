@@ -4,6 +4,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	_ "github.com/lib/pq"
+
 	"github.com/time-and-rice/todo-app/backend/infra"
 	"github.com/time-and-rice/todo-app/backend/presen"
 )
@@ -15,7 +16,8 @@ func main() {
 
 	cfg := infra.NewCfg()
 
-	_ = infra.NewDb(cfg.DatabaseUrl)
+	db := infra.NewDb(cfg.DatabaseUrl)
+	_ = infra.NewPqTaskRepository(db)
 
 	fir := infra.NewFir()
 	fa := infra.NewFirAuthenticator(fir)

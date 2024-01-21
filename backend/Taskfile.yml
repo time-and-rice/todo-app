@@ -29,7 +29,7 @@ tasks:
   migrate-development:
     dotenv: [".env.development"]
     cmds:
-      - migrate -database "$DATABASE_URL" -path ./migrations up
+      - migrate -database "$DATABASE_URL" {{ .CLI_ARGS }}
 
   # Test
   test:
@@ -66,4 +66,4 @@ tasks:
   migrate-production:
     dotenv: [".env.production"]
     cmds:
-      - migrate -database "$DATABASE_URL" -path ./migrations up
+      - migrate -database "$DATABASE_URL" {{ .CLI_ARGS }}

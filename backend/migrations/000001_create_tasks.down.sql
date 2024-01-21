@@ -1,3 +1,3 @@
-DROP TABLE IF EXISTS task;
+DROP TABLE IF EXISTS tasks;
 
 DROP TYPE IF EXISTS task_status;
