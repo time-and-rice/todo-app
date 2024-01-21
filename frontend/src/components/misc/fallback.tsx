@@ -1,28 +1,40 @@
 import { Alert, Center, Spinner } from "@chakra-ui/react";
 import { ReactNode, useMemo } from "react";
 
+import { getErrorMessage } from "~/utils/get-error-message";
+
 type FallbackProps = {
   loading: boolean;
+  loadingComponent?: ReactNode;
   error: unknown;
+  errorComponent?: ReactNode;
   children: ReactNode;
 };
 
 export function Fallback(props: FallbackProps) {
   const errMsg = useMemo(() => {
-    if (props.error)
-      return props.error instanceof Error
-        ? props.error.message
-        : "unknown error";
+    if (props.error) return getErrorMessage(props.error);
   }, [props.error]);
 
   if (props.loading)
-    return (
-      <Center px="2" py="8">
-        <Spinner />
-      </Center>
-    );
+    if (props.loadingComponent) return props.loadingComponent;
+    else
+      return (
+        <Center px="2" py="8">
+          <Spinner />
+        </Center>
+      );
 
-  if (errMsg) return <Alert status="error">{errMsg}</Alert>;
+  if (errMsg)
+    if (props.errorComponent) return props.errorComponent;
+    else
+      return (
+        <Center px="2" py="8">
+          <Alert status="error" maxW="md" whiteSpace="pre-wrap">
+            {errMsg}
+          </Alert>
+        </Center>
+      );
 
   return props.children;
 }

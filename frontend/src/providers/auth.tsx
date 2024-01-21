@@ -35,8 +35,6 @@ function useAuthProvider(): State {
       (e) => {
         setAuthUser(undefined);
         setError(e);
-        // TODO: is it necessary?
-        // if (e.message == "TOKEN_EXPIRED") signOut(auth);
       },
     );
 
