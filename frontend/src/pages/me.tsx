@@ -1,4 +1,3 @@
-import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
   Container,
@@ -10,6 +9,7 @@ import {
   MenuList,
 } from "@chakra-ui/react";
 import { signOut } from "firebase/auth";
+import { FaBars } from "react-icons/fa6";
 import { Outlet } from "react-router-dom";
 
 import { Guard } from "~/hocs/guard";
@@ -26,7 +26,7 @@ const MeLayout = Guard("AfterAuth", function () {
             </Box>
             <Box>
               <Menu placement="bottom-end">
-                <MenuButton as={IconButton} icon={<HamburgerIcon />} />
+                <MenuButton as={IconButton} icon={<FaBars />} />
                 <MenuList>
                   <MenuItem onClick={() => signOut(auth)}>Sign out</MenuItem>
                 </MenuList>

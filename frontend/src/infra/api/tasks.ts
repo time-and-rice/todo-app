@@ -1,4 +1,4 @@
-import { api } from "./axios";
+import { appAxios } from "./axios";
 
 type Task = {
   id: string;
@@ -9,17 +9,17 @@ type Task = {
 };
 
 export function getTasks(): Promise<Task[]> {
-  return api.get<Task[]>("/me/tasks").then((r) => r.data);
+  return appAxios.get<Task[]>("/me/tasks").then((r) => r.data);
 }
 
-type CreateTask = {
+export type CreateTask = {
   title: string;
 };
 
 export function createTask(input: CreateTask) {
-  return api.post("/me/tasks", input);
+  return appAxios.post("/me/tasks", input);
 }
 
 export function deleteTask(taskId: string) {
-  return api.delete(`/me/tasks/${taskId}`);
+  return appAxios.delete(`/me/tasks/${taskId}`);
 }

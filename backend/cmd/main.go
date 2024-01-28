@@ -28,9 +28,10 @@ func main() {
 	taskRepository := task.NewTaskRepositoryImpl(db)
 	taskQueryService := task.NewTaskQueryServiceImpl(db)
 
+	rootHandler := handler.NewRootHandler()
 	tasksHandler := handler.NewTasksHandler(taskRepository, taskQueryService)
 
-	handler.Register(e, authenticator, *tasksHandler)
+	handler.Register(e, authenticator, tasksHandler, rootHandler)
 
 	e.Logger.Fatal(e.Start(":" + appEnv.Port))
 }

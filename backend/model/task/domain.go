@@ -53,5 +53,5 @@ type TaskDto struct {
 }
 
 type TaskQueryService interface {
-	GetTasks() ([]TaskDto, error)
+	GetTasks(authUserId string) ([]TaskDto, error)
 }

@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -21,8 +22,10 @@ func NewTasksHandler(tr task.TaskRepository, tqs task.TaskQueryService) *TasksHa
 }
 
 func (th *TasksHandler) GetTasks(c echo.Context) error {
-	tasks, err := th.taskQueryService.GetTasks()
+	authUser := middleware.GetAuthUser(c)
+	tasks, err := th.taskQueryService.GetTasks(authUser.Id)
 	if err != nil {
+		log.Fatal(err)
 		return c.JSON(http.StatusInternalServerError, err)
 	}
 	return c.JSON(http.StatusOK, tasks)
@@ -35,7 +38,6 @@ type CreateTaskBody struct {
 func (th *TasksHandler) CreateTask(c echo.Context) error {
 	authUser := middleware.GetAuthUser(c)
 
-	// TODO: "github.com/time-and-rice/todo-app/backend/lib"
 	body := new(CreateTaskBody)
 	err := c.Bind(body)
 	if err != nil {

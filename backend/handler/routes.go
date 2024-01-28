@@ -6,8 +6,10 @@ import (
 	"github.com/time-and-rice/todo-app/backend/lib"
 )
 
-func Register(e *echo.Echo, authenticator lib.Authenticator, tasksHandler TasksHandler) {
+func Register(e *echo.Echo, authenticator lib.Authenticator, tasksHandler *TasksHandler, rootHandler *RootHandler) {
 	mustAuth := middleware.NewMustAuthMiddleware(authenticator)
+
+	e.GET("", rootHandler.GetHome)
 
 	me := e.Group("/me")
 	me.Use(mustAuth)
