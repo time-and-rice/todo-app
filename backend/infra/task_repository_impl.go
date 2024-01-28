@@ -45,7 +45,7 @@ func NewPqTaskRepository(db *sqlx.DB) domain.TaskRepository {
 
 func (r *PqTaskRepository) FindById(id string) (*domain.Task, error) {
 	var pqTask PqTask
-	err := r.db.Get(&pqTask, "SELECT * FROM tasks WHERE id =$2", id)
+	err := r.db.Get(&pqTask, "SELECT * FROM tasks WHERE id =$1", id)
 	if err != nil {
 		return nil, err
 	}

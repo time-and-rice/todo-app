@@ -9,7 +9,7 @@ require (
 	github.com/labstack/echo/v4 v4.11.4
 )
 
-require github.com/oklog/ulid v1.3.1 // indirect
+require github.com/oklog/ulid v1.3.1
 
 require (
 	cloud.google.com/go v0.110.0 // indirect
