@@ -21,10 +21,10 @@ func (r *TaskRepositoryImpl) FindById(id string) (*Task, error) {
 
 func (r *TaskRepositoryImpl) Save(task *Task) error {
 	_, err := r.db.NamedExec(`
-		INSERT INTO tasks (id, title, status, created_at, updated_at)
-		VALUES (:id, :title, :status, :created_at, :updated_at)
+		INSERT INTO tasks (id, title, status, created_at, updated_at, auth_user_id)
+		VALUES (:id, :title, :status, :created_at, :updated_at, :auth_user_id)
 		ON CONFLICT (id) DO UPDATE
-		SET title = :title, status = :status, created_at = :created_at, updated_at = :updated_at
+		SET title = :title, status = :status, created_at = :created_at, updated_at = :updated_at, auth_user_id = :auth_user_id
 	`, task)
 	return err
 }

@@ -15,11 +15,12 @@ const (
 
 // Command
 type Task struct {
-	Id        string     `db:"id"`
-	Title     string     `db:"title"`
-	Status    TaskStatus `db:"status"`
-	CreatedAt time.Time  `db:"created_at"`
-	UpdatedAt time.Time  `db:"updated_at"`
+	Id         string     `db:"id"`
+	Title      string     `db:"title"`
+	Status     TaskStatus `db:"status"`
+	CreatedAt  time.Time  `db:"created_at"`
+	UpdatedAt  time.Time  `db:"updated_at"`
+	AuthUserId string     `db:"auth_user_id"`
 }
 
 type TaskRepository interface {
@@ -28,16 +29,17 @@ type TaskRepository interface {
 	Delete(task *Task) error
 }
 
-func NewTask(title string) *Task {
+func NewTask(authUserId string, title string) *Task {
 	id := lib.GenId()
 	now := lib.GenNow()
 
 	return &Task{
-		Id:        id,
-		Title:     title,
-		Status:    TaskStatusIncomplete,
-		CreatedAt: now,
-		UpdatedAt: now,
+		Id:         id,
+		Title:      title,
+		Status:     TaskStatusIncomplete,
+		CreatedAt:  now,
+		UpdatedAt:  now,
+		AuthUserId: authUserId,
 	}
 }
 

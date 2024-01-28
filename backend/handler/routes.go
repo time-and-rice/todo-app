@@ -12,7 +12,8 @@ func Register(e *echo.Echo, authenticator lib.Authenticator, tasksHandler TasksH
 	me := e.Group("/me")
 	me.Use(mustAuth)
 
-	// /me/tasks
 	tasks := me.Group("/tasks")
 	tasks.GET("", tasksHandler.GetTasks)
+	tasks.POST("", tasksHandler.CreateTask)
+	tasks.DELETE("/:taskId", tasksHandler.DeleteTask)
 }

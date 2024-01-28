@@ -16,6 +16,7 @@ func main() {
 
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(middleware.CORS())
+	e.Use(middleware.Logger())
 
 	appEnv := config.NewAppEnv()
 
