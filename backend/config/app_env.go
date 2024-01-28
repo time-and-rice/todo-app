@@ -1,4 +1,4 @@
-package infra
+package config
 
 import (
 	"os"
@@ -7,19 +7,19 @@ import (
 	"github.com/joho/godotenv"
 )
 
-type Config struct {
+type AppEnv struct {
 	ReleaseStage string `env:"RELEASE_STAGE,notEmpty"`
 	Port         string `env:"PORT" envDefault:"8080"`
 	DatabaseUrl  string `env:"DATABASE_URL,notEmpty"`
 }
 
-func NewCfg() Config {
+func NewAppEnv() AppEnv {
 	config := os.Getenv("CONFIG")
 	err := godotenv.Load(config)
 	if err != nil {
 		panic(err)
 	}
-	var cfg Config
-	env.Parse(&cfg)
-	return cfg
+	var appEnv AppEnv
+	env.Parse(&appEnv)
+	return appEnv
 }

@@ -5,29 +5,31 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	_ "github.com/lib/pq"
 
-	"github.com/time-and-rice/todo-app/backend/infra"
-	"github.com/time-and-rice/todo-app/backend/presen"
+	"github.com/time-and-rice/todo-app/backend/config"
+	"github.com/time-and-rice/todo-app/backend/handler"
+	"github.com/time-and-rice/todo-app/backend/lib"
+	"github.com/time-and-rice/todo-app/backend/model/task"
 )
 
 func main() {
 	e := echo.New()
+
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(middleware.CORS())
 
-	cfg := infra.NewCfg()
+	appEnv := config.NewAppEnv()
 
-	db := infra.NewDb(cfg.DatabaseUrl)
-	_ = infra.NewPqTaskRepository(db)
+	db := config.NewDb(appEnv.DatabaseUrl)
+	fir := config.NewFir()
 
-	fir := infra.NewFir()
-	fa := infra.NewFirAuthenticator(fir)
+	authenticator := lib.NewFirAuthenticator(fir)
 
-	am := presen.NewAuthMiddleware(fa)
-	_ = presen.NewMustAuthMiddleware(fa)
+	taskRepository := task.NewTaskRepositoryImpl(db)
+	taskQueryService := task.NewTaskQueryServiceImpl(db)
 
-	root := e.Group("/")
-	root.Use(am)
-	root.GET("", presen.GetIndex)
+	tasksHandler := handler.NewTasksHandler(taskRepository, taskQueryService)
 
-	e.Start(":" + cfg.Port)
+	handler.Register(e, authenticator, *tasksHandler)
+
+	e.Logger.Fatal(e.Start(":" + appEnv.Port))
 }

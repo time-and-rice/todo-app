@@ -17,6 +17,7 @@
   - go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
   - migrate create -ext sql -dir migrations -seq create_tasks
   - migrate -database "postgresql://postgres:password@localhost:5432/todo-app?sslmode=disable" -path ./migrations up
+  - docker exec -it (6510) /bin/bash
   - psql -U postgres -d todo-app
     - \dt: テーブル一覧
     - \d tasks: カラム定義

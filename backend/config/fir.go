@@ -1,4 +1,4 @@
-package infra
+package config
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 )
 
 type Fir struct {
-	AuthClient *auth.Client
+	Auth *auth.Client
 }
 
 func NewFir() *Fir {

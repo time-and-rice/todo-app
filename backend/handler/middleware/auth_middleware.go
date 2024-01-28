@@ -1,4 +1,4 @@
-package presen
+package middleware
 
 import (
 	"errors"
@@ -6,10 +6,10 @@ import (
 	"strings"
 
 	"github.com/labstack/echo/v4"
-	"github.com/time-and-rice/todo-app/backend/app"
+	"github.com/time-and-rice/todo-app/backend/lib"
 )
 
-func NewAuthMiddleware(a app.Authenticator) echo.MiddlewareFunc {
+func NewAuthMiddleware(a lib.Authenticator) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			au, _ := decodeJwt(a, c)
@@ -19,7 +19,7 @@ func NewAuthMiddleware(a app.Authenticator) echo.MiddlewareFunc {
 	}
 }
 
-func NewMustAuthMiddleware(a app.Authenticator) echo.MiddlewareFunc {
+func NewMustAuthMiddleware(a lib.Authenticator) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			au, err := decodeJwt(a, c)
@@ -32,7 +32,7 @@ func NewMustAuthMiddleware(a app.Authenticator) echo.MiddlewareFunc {
 	}
 }
 
-func decodeJwt(a app.Authenticator, c echo.Context) (*app.AuthUser, error) {
+func decodeJwt(a lib.Authenticator, c echo.Context) (*lib.AuthUser, error) {
 	token := c.Request().Header.Get("Authorization")
 	if token == "" {
 		return nil, errors.New("authorization header is required")
@@ -51,8 +51,8 @@ func decodeJwt(a app.Authenticator, c echo.Context) (*app.AuthUser, error) {
 	return au, nil
 }
 
-func GetAuthUser(c echo.Context) *app.AuthUser {
-	au, ok := c.Get("authUser").(*app.AuthUser)
+func GetAuthUser(c echo.Context) *lib.AuthUser {
+	au, ok := c.Get("authUser").(*lib.AuthUser)
 	if !ok {
 		return nil
 	}
