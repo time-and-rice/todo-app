@@ -30,7 +30,7 @@ export function Fallback(props: FallbackProps) {
     else
       return (
         <Center px="2" py="8">
-          <Alert status="error" maxW="md" whiteSpace="pre-wrap">
+          <Alert status="error" whiteSpace="pre-wrap">
             {errMsg}
           </Alert>
         </Center>

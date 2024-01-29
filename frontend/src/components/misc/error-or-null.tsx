@@ -14,7 +14,7 @@ export function ErrorOrNull(props: ErrorOrNullProps) {
 
   if (errMsg)
     return (
-      <Alert status="error" maxW="md" whiteSpace="pre-wrap">
+      <Alert status="error" whiteSpace="pre-wrap">
         {errMsg}
       </Alert>
     );

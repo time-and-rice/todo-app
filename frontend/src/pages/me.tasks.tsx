@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import { FaEllipsisVertical } from "react-icons/fa6";
 
 import { InputField } from "~/components/form/input-filed";
+import { ErrorOrNull } from "~/components/misc/error-or-null";
 import { Fallback } from "~/components/misc/fallback";
 import { useCreateTask } from "~/hooks/tasks/use-create-task";
 import { useDeleteTask } from "~/hooks/tasks/use-delete-task";
@@ -71,6 +72,7 @@ export default function Tasks() {
         ))}
 
         <Stack as="form" onSubmit={handleSubmit(onSubmit)}>
+          <ErrorOrNull error={createTask.error} />
           <InputField
             placeholder="Task title"
             isRequired

@@ -15,12 +15,12 @@ const (
 
 // Command
 type Task struct {
-	Id         string     `db:"id"`
-	Title      string     `db:"title"`
+	Id         string     `db:"id" validate:"required"`
+	Title      string     `db:"title" validate:"required"`
 	Status     TaskStatus `db:"status"`
 	CreatedAt  time.Time  `db:"created_at"`
 	UpdatedAt  time.Time  `db:"updated_at"`
-	AuthUserId string     `db:"auth_user_id"`
+	AuthUserId string     `db:"auth_user_id" validate:"required"`
 }
 
 type TaskRepository interface {

@@ -24,7 +24,7 @@ func NewMustAuthMiddleware(a lib.Authenticator) echo.MiddlewareFunc {
 		return func(c echo.Context) error {
 			au, err := decodeJwt(a, c)
 			if err != nil {
-				return c.JSON(http.StatusUnauthorized, err)
+				return c.JSON(http.StatusUnauthorized, err.Error())
 			}
 			c.Set("authUser", au)
 			return next(c)

@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -25,8 +24,7 @@ func (th *TasksHandler) GetTasks(c echo.Context) error {
 	authUser := middleware.GetAuthUser(c)
 	tasks, err := th.taskQueryService.GetTasks(authUser.Id)
 	if err != nil {
-		log.Fatal(err)
-		return c.JSON(http.StatusInternalServerError, err)
+		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 	return c.JSON(http.StatusOK, tasks)
 }
@@ -41,13 +39,18 @@ func (th *TasksHandler) CreateTask(c echo.Context) error {
 	body := new(CreateTaskBody)
 	err := c.Bind(body)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
 	task := task.NewTask(authUser.Id, body.Title)
+	err = c.Validate(task)
+	if err != nil {
+		return c.JSON(http.StatusUnprocessableEntity, err.Error())
+	}
+
 	err = th.taskRepository.Save(task)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err)
+		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
 	return nil
@@ -60,7 +63,7 @@ func (th *TasksHandler) DeleteTask(c echo.Context) error {
 
 	task, err := th.taskRepository.FindById(taskId)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err)
+		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 	if task == nil {
 		return c.JSON(http.StatusNotFound, nil)
@@ -72,7 +75,7 @@ func (th *TasksHandler) DeleteTask(c echo.Context) error {
 
 	err = th.taskRepository.Delete(task)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err)
+		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
 	return nil

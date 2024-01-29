@@ -8,11 +8,14 @@ import (
 	"github.com/time-and-rice/todo-app/backend/config"
 	"github.com/time-and-rice/todo-app/backend/handler"
 	"github.com/time-and-rice/todo-app/backend/lib"
+	"github.com/time-and-rice/todo-app/backend/model"
 	"github.com/time-and-rice/todo-app/backend/model/task"
 )
 
 func main() {
 	e := echo.New()
+
+	e.Validator = model.NewCustomValidator()
 
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(middleware.CORS())
