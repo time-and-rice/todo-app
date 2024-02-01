@@ -43,6 +43,15 @@ func NewTask(authUserId string, title string) *Task {
 	}
 }
 
+func (t *Task) ToggleComplete() {
+	switch t.Status {
+	case TaskStatusIncomplete:
+		t.Status = TaskStatusComplete
+	case TaskStatusComplete:
+		t.Status = TaskStatusIncomplete
+	}
+}
+
 // Query
 type TaskDto struct {
 	Id        string     `db:"id" json:"id"`

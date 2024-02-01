@@ -3,6 +3,7 @@ import {
   Button,
   Divider,
   Flex,
+  HStack,
   IconButton,
   Menu,
   MenuButton,
@@ -12,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { Fragment } from "react";
 import { useForm } from "react-hook-form";
-import { FaEllipsisVertical } from "react-icons/fa6";
+import { FaCheck, FaEllipsisVertical } from "react-icons/fa6";
 
 import { InputField } from "~/components/form/input-filed";
 import { ErrorOrNull } from "~/components/misc/error-or-null";
@@ -20,6 +21,7 @@ import { Fallback } from "~/components/misc/fallback";
 import { useCreateTask } from "~/hooks/tasks/use-create-task";
 import { useDeleteTask } from "~/hooks/tasks/use-delete-task";
 import { useTasks } from "~/hooks/tasks/use-tasks";
+import { useToggleTaskComplete } from "~/hooks/tasks/use-toggle-task-complete";
 
 type CreateTaskForm = {
   title: string;
@@ -30,6 +32,7 @@ export default function Tasks() {
 
   const createTask = useCreateTask();
   const deleteTask = useDeleteTask();
+  const toggleTaskComplete = useToggleTaskComplete();
 
   const { register, handleSubmit, reset } = useForm<CreateTaskForm>();
 
@@ -50,7 +53,26 @@ export default function Tasks() {
         {tasks?.map((task) => (
           <Fragment key={task.id}>
             <Flex justifyContent="space-between">
-              <Box>{task.title}</Box>
+              <HStack>
+                {task.status == "Incomplete" && (
+                  <Button
+                    size="xs"
+                    rounded="full"
+                    onClick={() => toggleTaskComplete.mutate(task.id)}
+                  />
+                )}
+                {task.status == "Complete" && (
+                  <IconButton
+                    icon={<FaCheck />}
+                    aria-label="fa-check"
+                    size="xs"
+                    rounded="full"
+                    colorScheme="green"
+                    onClick={() => toggleTaskComplete.mutate(task.id)}
+                  />
+                )}
+                <Box>{task.title}</Box>
+              </HStack>
               <Box>
                 <Menu placement="bottom-end">
                   <MenuButton

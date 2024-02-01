@@ -1,5 +1,11 @@
 import { getHome } from "./root";
-import { CreateTask, createTask, deleteTask, getTasks } from "./tasks";
+import {
+  CreateTask,
+  createTask,
+  deleteTask,
+  getTasks,
+  toggleTaskComplete,
+} from "./tasks";
 
 export const api = {
   // root
@@ -9,6 +15,7 @@ export const api = {
   getTasks,
   createTask,
   deleteTask,
+  toggleTaskComplete,
 };
 
 export type { CreateTask };

@@ -53,7 +53,7 @@ func (th *TasksHandler) CreateTask(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	return nil
+	return c.JSON(http.StatusOK, nil)
 }
 
 func (th *TasksHandler) DeleteTask(c echo.Context) error {
@@ -78,5 +78,32 @@ func (th *TasksHandler) DeleteTask(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	return nil
+	return c.JSON(http.StatusOK, nil)
+}
+
+func (th *TasksHandler) PatchTaskComplete(c echo.Context) error {
+	authUser := middleware.GetAuthUser(c)
+
+	taskId := c.Param("taskId")
+
+	task, err := th.taskRepository.FindById(taskId)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+	if task == nil {
+		return c.JSON(http.StatusNotFound, nil)
+	}
+
+	if task.AuthUserId != authUser.Id {
+		return c.JSON(http.StatusForbidden, nil)
+	}
+
+	task.ToggleComplete()
+
+	err = th.taskRepository.Save(task)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	return c.JSON(http.StatusOK, nil)
 }

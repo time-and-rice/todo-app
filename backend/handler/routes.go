@@ -18,4 +18,5 @@ func Register(e *echo.Echo, authenticator lib.Authenticator, tasksHandler *Tasks
 	tasks.GET("", tasksHandler.GetTasks)
 	tasks.POST("", tasksHandler.CreateTask)
 	tasks.DELETE("/:taskId", tasksHandler.DeleteTask)
+	tasks.PATCH("/:taskId/complete", tasksHandler.PatchTaskComplete)
 }

@@ -23,3 +23,7 @@ export function createTask(input: CreateTask) {
 export function deleteTask(taskId: string) {
   return appAxios.delete(`/me/tasks/${taskId}`);
 }
+
+export function toggleTaskComplete(taskId: string) {
+  return appAxios.patch(`/me/tasks/${taskId}/complete`);
+}
