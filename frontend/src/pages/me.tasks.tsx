@@ -52,8 +52,8 @@ export default function Tasks() {
       <Stack py="2">
         {tasks?.map((task) => (
           <Fragment key={task.id}>
-            <Flex justifyContent="space-between">
-              <HStack>
+            <Flex justifyContent="space-between" minH="10">
+              <HStack spacing="4">
                 {task.status == "Incomplete" && (
                   <Button
                     size="xs"
@@ -73,12 +73,13 @@ export default function Tasks() {
                 )}
                 <Box>{task.title}</Box>
               </HStack>
-              <Box>
+
+              <Flex alignItems="center" h="10">
                 <Menu placement="bottom-end">
                   <MenuButton
                     as={IconButton}
                     icon={<FaEllipsisVertical />}
-                    size="xs"
+                    size="sm"
                     variant="ghost"
                   />
                   <MenuList>
@@ -87,7 +88,7 @@ export default function Tasks() {
                     </MenuItem>
                   </MenuList>
                 </Menu>
-              </Box>
+              </Flex>
             </Flex>
             <Divider />
           </Fragment>
