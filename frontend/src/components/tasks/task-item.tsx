@@ -11,15 +11,26 @@ import {
 } from "@chakra-ui/react";
 import { FaCheck, FaEllipsisVertical } from "react-icons/fa6";
 
+import { useSortable } from "~/hooks/misc/use-sortable";
 import { useDeleteTask } from "~/hooks/tasks/use-delete-task";
 import { useToggleTaskComplete } from "~/hooks/tasks/use-toggle-task-complete";
 import { Task } from "~/infra/api";
 
 type TaskItemProps = {
   task: Task;
+  index: number;
+  onMove: (prevIndex: number, nextIndex: number) => void;
 };
 
-export function TaskItem({ task }: TaskItemProps) {
+export function TaskItem({ task, index, onMove }: TaskItemProps) {
+  const { ref, drop, drag, isDragging } = useSortable({
+    sortableItem: { index },
+    sortableItemType: "TaskItem",
+    onHover: onMove,
+  });
+
+  drag(drop(ref));
+
   const deleteTask = useDeleteTask();
   const toggleTaskComplete = useToggleTaskComplete();
 
@@ -30,8 +41,12 @@ export function TaskItem({ task }: TaskItemProps) {
   }
 
   return (
-    <Flex justifyContent="space-between" alignItems="start">
-      <HStack alignItems="start" spacing="4" py="1">
+    <Flex
+      justifyContent="space-between"
+      alignItems="start"
+      opacity={isDragging ? 0 : 1}
+    >
+      <HStack ref={ref} flex="1" alignItems="start" spacing="4" py="1">
         {task.status == "Incomplete" && (
           <Button
             size="xs"

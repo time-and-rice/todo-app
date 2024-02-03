@@ -1,51 +1,42 @@
-import { Button, Divider, Stack } from "@chakra-ui/react";
-import { Fragment } from "react";
-import { useForm } from "react-hook-form";
+import { Divider, Stack } from "@chakra-ui/react";
+import update from "immutability-helper";
+import { useEffect, useState } from "react";
 
-import { InputField } from "~/components/form/input-filed";
-import { ErrorOrNull } from "~/components/misc/error-or-null";
 import { Fallback } from "~/components/misc/fallback";
+import { TaskCreateForm } from "~/components/tasks/task-create-form";
 import { TaskItem } from "~/components/tasks/task-item";
-import { useCreateTask } from "~/hooks/tasks/use-create-task";
 import { useTasks } from "~/hooks/tasks/use-tasks";
 
-type CreateTaskForm = {
-  title: string;
-};
-
 export default function Tasks() {
-  const { tasks, loading, error } = useTasks();
+  const { tasks: origTasks, loading, error } = useTasks();
 
-  const createTask = useCreateTask();
+  const [tasks, setTasks] = useState(origTasks);
 
-  const { register, handleSubmit, reset } = useForm<CreateTaskForm>();
+  useEffect(() => {
+    setTasks(origTasks);
+  }, [origTasks]);
 
-  async function onSubmit(v: CreateTaskForm) {
-    await createTask.mutate(v);
-    reset();
+  function onMove(prevIndex: number, nextIndex: number) {
+    setTasks((prev) =>
+      update(prev, {
+        $splice: [
+          [prevIndex, 1],
+          [nextIndex, 0, prev[prevIndex]],
+        ],
+      }),
+    );
   }
 
   return (
     <Fallback loading={loading} error={error}>
       <Stack py="2">
-        {tasks?.map((task) => (
-          <Fragment key={task.id}>
-            <TaskItem task={task} />
+        {tasks.map((task, index) => (
+          <Stack key={task.id}>
+            <TaskItem task={task} index={index} onMove={onMove} />
             <Divider />
-          </Fragment>
+          </Stack>
         ))}
-
-        <Stack as="form" onSubmit={handleSubmit(onSubmit)}>
-          <ErrorOrNull error={createTask.error} />
-          <InputField
-            placeholder="Task title"
-            isRequired
-            register={register("title")}
-          />
-          <Button type="submit" colorScheme="blue" size="sm" alignSelf="end">
-            Submit
-          </Button>
-        </Stack>
+        <TaskCreateForm />
       </Stack>
     </Fallback>
   );
