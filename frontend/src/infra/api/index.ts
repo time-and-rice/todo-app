@@ -4,6 +4,7 @@ import {
   createTask,
   deleteTask,
   getTasks,
+  Task,
   toggleTaskComplete,
 } from "./tasks";
 
@@ -18,4 +19,4 @@ export const api = {
   toggleTaskComplete,
 };
 
-export type { CreateTask };
+export type { CreateTask, Task };

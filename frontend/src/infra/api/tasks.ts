@@ -1,6 +1,6 @@
 import { appAxios } from "./axios";
 
-type Task = {
+export type Task = {
   id: string;
   title: string;
   status: "Incomplete" | "Complete";
