@@ -1,8 +1,8 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { HTML5toTouch } from "rdndmb-html5-to-touch";
 import { Fragment, useEffect } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd-multi-backend";
 import { RouterProvider } from "react-router-dom";
 
 import { client } from "./client";
@@ -19,7 +19,7 @@ export function App() {
 
   return (
     <Fragment>
-      <DndProvider backend={HTML5Backend}>
+      <DndProvider options={HTML5toTouch}>
         <ChakraProvider theme={extendedTheme}>
           <AuthProvider>
             <QueryClientProvider client={client}>
