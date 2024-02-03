@@ -4,13 +4,13 @@ import { useDrag, useDrop, XYCoord } from "react-dnd";
 export type UseSortableOption<SortableItem extends { index: number }> = {
   sortableItem: SortableItem;
   sortableItemType: string;
-  onHover: (prevIndex: number, nextIndex: number) => void;
+  onMove: (prevIndex: number, nextIndex: number) => void;
 };
 
 export function useSortable<SortableItem extends { index: number }>({
   sortableItem,
   sortableItemType,
-  onHover,
+  onMove,
 }: UseSortableOption<SortableItem>) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -28,7 +28,7 @@ export function useSortable<SortableItem extends { index: number }>({
       const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
-      onHover(dragIndex, hoverIndex);
+      onMove(dragIndex, hoverIndex);
       hoverItem.index = hoverIndex;
     },
   });

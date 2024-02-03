@@ -26,9 +26,8 @@ export function TaskItem({ task, index, onMove }: TaskItemProps) {
   const { ref, drop, drag, isDragging } = useSortable({
     sortableItem: { index },
     sortableItemType: "TaskItem",
-    onHover: onMove,
+    onMove,
   });
-
   drag(drop(ref));
 
   const deleteTask = useDeleteTask();
@@ -46,7 +45,14 @@ export function TaskItem({ task, index, onMove }: TaskItemProps) {
       alignItems="start"
       opacity={isDragging ? 0 : 1}
     >
-      <HStack ref={ref} flex="1" alignItems="start" spacing="4" py="1">
+      <HStack
+        ref={ref}
+        flex="1"
+        alignItems="start"
+        spacing="4"
+        py="1"
+        cursor="pointer"
+      >
         {task.status == "Incomplete" && (
           <Button
             size="xs"
